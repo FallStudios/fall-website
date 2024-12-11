@@ -44,48 +44,52 @@
     }
 
     .logo-container {
-      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
     .logo {
       width: 300px; /* Increased logo size */
+      height: auto;
+      position: relative;
+      margin-left: 80px;
     }
 
     /* Background Text */
     .text-background h1 {
-      font-size: 8rem;
+      font-size: 10rem;
       font-family: 'Arial', sans-serif;
-      color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.161);
       font-weight: bold;
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -55%);
       z-index: -2;
     }
 
     /* Scroll Indicator */
     .scroll-indicator {
       position: absolute;
-      bottom: 20px; /* Positioned at the bottom */
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      animation: bounce 2s infinite;
-      font-size: 2rem;
-      color: white;
-    }
-
-    .scroll-indicator span {
-      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 20px solid white;
       animation: bounce 2s infinite;
     }
 
     @keyframes bounce {
       0%, 100% {
-        transform: translateY(0);
+        transform: translate(-50%, 0);
       }
       50% {
-        transform: translateY(10px);
+        transform: translate(-50%, 10px);
       }
     }
 
@@ -99,8 +103,8 @@
     }
 
     .menu-bar {
-      width: 30px;
-      height: 4px;
+      width: 25px; /* Reduced menu bar width */
+      height: 2px;
       background: white;
       margin: 5px 0;
     }
@@ -110,11 +114,11 @@
   <div class="landing">
     <!-- Video Background -->
     <video autoplay muted loop class="background-video">
-      <source src="video/SnapSave.io-Abstract Connected Triangles On Bright Green Background _ Free Stock Video Footage HD 4K-(1080p).mp4" type="video/mp4">
+      <source src="video/Topographic Textures _ After Effects _ Topographic Design _ Topographic Map  _ Background hd.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
-    <!-- Overlay Text -->
+    <!-- Overlay Content -->
     <div class="overlay">
       <div class="logo-container">
         <!-- Replace with your logo -->
@@ -123,9 +127,7 @@
       <div class="text-background">
         <h1>Fall Studios</h1>
       </div>
-      <div class="scroll-indicator">
-        <span>↓</span>
-      </div>
+      <div class="scroll-indicator"></div>
     </div>
 
     <!-- Menu -->
@@ -137,9 +139,9 @@
   </div>
 
   <script>
-    // You can add interactivity here, such as opening a menu when the menu icon is clicked.
+    // Add interactivity here (e.g., menu toggle)
     document.querySelector('.menu').addEventListener('click', () => {
-      alert('Menu Clicked! Customize as needed.');
+      alert('Menu Clicked!');
     });
   </script>
 </body>
