@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fall Studios</title>
+  <link rel="icon" href="Untitled1.png" type="Untitled1 ty">
   <style>
     * {
       margin: 0;
@@ -12,8 +13,7 @@
     }
 
     body, html {
-      height: 100%;
-      overflow: hidden;
+      height: 200%; /* Increase height to enable scrolling */
     }
 
     .landing {
@@ -51,10 +51,14 @@
     }
 
     .logo {
-      width: 300px; /* Increased logo size */
+      width: 300px;
       height: auto;
-      position: relative;
-      margin-left: 80px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      transition: all 0.3s ease;
     }
 
     /* Background Text */
@@ -95,18 +99,59 @@
 
     /* Menu */
     .menu {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 2;
+      z-index: 1000;
       cursor: pointer;
     }
 
     .menu-bar {
-      width: 25px; /* Reduced menu bar width */
+      width: 25px;
       height: 2px;
       background: white;
       margin: 5px 0;
+    }
+
+    /* Navigation Bar (added for context) */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 40px;
+      z-index: 200;
+      display: none; /* Hidden by default */
+    }
+    .nav.show {
+      display: block; /* Show when scrolled */
+    }
+
+    /* Sliding Div */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.294);
+      backdrop-filter: blur(20px);
+      transition: right 0.3s ease;
+      z-index: 999;
+      color: white;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .side-menu.open {
+      right: 0;
+    }
+
+    .side-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 20px 0;
     }
   </style>
 </head>
@@ -120,9 +165,8 @@
 
     <!-- Overlay Content -->
     <div class="overlay">
-      <div class="logo-container">
-        <!-- Replace with your logo -->
-        <img src="Untitled1.png" alt="Logo" class="logo">
+      <div class="logo-container" id="logoContainer">
+        <img src="Untitled1.png" alt="Logo" class="logo" id="logo">
       </div>
       <div class="text-background">
         <h1>Fall Studios</h1>
@@ -130,18 +174,74 @@
       <div class="scroll-indicator"></div>
     </div>
 
+    <!-- Navigation Bar -->
+    <div class="nav" id="nav">
+      
+    </div>
+
     <!-- Menu -->
-    <div class="menu">
+    <div class="menu" id="menu">
       <div class="menu-bar"></div>
       <div class="menu-bar"></div>
       <div class="menu-bar"></div>
     </div>
   </div>
 
+  <!-- Sliding Div -->
+  <div class="side-menu" id="sideMenu">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </div>
+
   <script>
-    // Add interactivity here (e.g., menu toggle)
-    document.querySelector('.menu').addEventListener('click', () => {
-      alert('Menu Clicked!');
+    window.onload = () => {
+      window.scrollTo(0, 0);
+    };
+
+    // Shrinking Logo & Navigation Bar Visibility
+    window.addEventListener('scroll', () => {
+      const logo = document.getElementById('logo');
+      const nav = document.getElementById('nav');
+      const scrollY = window.scrollY;
+      const maxShrink = 0.2; // Maximum shrink factor (scale to 20%)
+      const scrollFactor = Math.min(scrollY / 400, 1); // Normalize scroll up to 400px
+
+      // Shrink the logo and move upwards until the top reaches the top of the screen
+      const scale = 1 - (scrollFactor * (1 - maxShrink)); // Shrink calculation
+      const translateY = scrollFactor * -50; // Move up 50px max (negative value moves up)
+
+      // Apply the shrink and move up
+      logo.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+      // Fix the logo after it reaches the top
+      if (scrollFactor >= 1) {
+        logo.style.position = 'fixed'; // Fix position after scroll
+        logo.style.top = '0'; // Keep it at the top
+      } else {
+        logo.style.position = 'absolute'; // Keep it absolute before reaching the top
+        logo.style.top = `${50 - (scrollFactor * 10)}%`; // Move up by 10% as you scroll
+      }
+
+      // Show navigation bar when scrolling
+      if (scrollY > 100) {
+        nav.classList.add('show');
+      } else {
+        nav.classList.remove('show');
+      }
+
+      // Move logo down when nav is visible
+      if (scrollY > 100) {
+        logo.style.top = '60px'; // Move logo down a bit when nav is shown
+      };
+    });
+
+    // Toggle side menu on menu click
+    const menu = document.getElementById('menu');
+    const sideMenu = document.getElementById('sideMenu');
+    menu.addEventListener('click', () => {
+      sideMenu.classList.toggle('open');
     });
   </script>
 </body>
